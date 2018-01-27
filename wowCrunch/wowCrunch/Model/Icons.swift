@@ -8,13 +8,14 @@
 
 import SpriteKit
 
+// MARK: - IconType
 enum IconType: Int, CustomStringConvertible {
-    case unknown = 0, bear, car, mechastrider, ridingelekkelite, rocketmount, wolf
+    case unknown = 0, bear, cat, mechastrider, ridingelekkelite, rocketmount, wolf
     
     var spriteName: String {
         let spriteNames = [
         "bear",
-        "car",
+        "cat",
         "mechastrider",
         "ridingelekkelite",
         "rocketmount",
@@ -36,11 +37,24 @@ enum IconType: Int, CustomStringConvertible {
     }
 }
 
+
+// MARK: - Compare two Icons
+func ==(lhs: Icons, rhs: Icons) -> Bool {
+    return lhs.column == rhs.column && lhs.row == rhs.row
+}
+
 class Icons: CustomStringConvertible, Hashable {
+    
     var column: Int
     var row: Int
     let iconType: IconType
     var sprite: SKSpriteNode?
+    
+    init(column: Int, row: Int, iconType: IconType) {
+        self.column = column
+        self.row = row
+        self.iconType = iconType
+    }
     
     var description: String {
         return "type:\(iconType) square:(\(column),\(row)"
@@ -50,14 +64,5 @@ class Icons: CustomStringConvertible, Hashable {
         return row * 10 + column
     }
     
-    init(column: Int, row: Int, iconType: IconType) {
-        self.column = column
-        self.row = row
-        self.iconType = iconType
-    }
 }
 
-// MARK: - Compare two Icons
-func ==(lhs: Icons, rhs: Icons) -> Bool {
-    return lhs.column == rhs.column && lhs.row == rhs.row
-}
