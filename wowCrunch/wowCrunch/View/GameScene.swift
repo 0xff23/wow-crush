@@ -25,6 +25,13 @@ class GameScene: SKScene {
     
     var swipeHandler: ((Swap) -> ())?
     
+    // MARK: Sound
+    let swapSound = SKAction.playSoundFileNamed("Chomp.wav", waitForCompletion: false)
+    let invalidSwapSound = SKAction.playSoundFileNamed("Error.wav", waitForCompletion: false)
+    let matchSound = SKAction.playSoundFileNamed("Ka-Ching.wav", waitForCompletion: false)
+    let fallingCookieSound = SKAction.playSoundFileNamed("Scrape.wav", waitForCompletion: false)
+    let addCookieSound = SKAction.playSoundFileNamed("Drip.wav", waitForCompletion: false)
+    
     // MARK: Init
     required init?(coder aDecoder: NSCoder) {
         fatalError("init(coder) not used")
@@ -127,6 +134,8 @@ class GameScene: SKScene {
         moveB.timingMode = .easeOut
         spriteIconB.run(moveB, completion: completion)
         
+        run(swapSound)
+        
     }
     
     func animateInvalidSwap(_ swap: Swap, completion: @escaping () -> ()) {
@@ -146,6 +155,8 @@ class GameScene: SKScene {
         
         spriteIconA.run(SKAction.sequence([moveA, moveB]), completion: completion)
         spriteIconB.run(SKAction.sequence([moveB, moveA]))
+        
+        run(invalidSwapSound)
     }
     
     // MARK: Icons Swipe Handlers
